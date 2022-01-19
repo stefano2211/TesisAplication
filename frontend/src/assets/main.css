@@ -1,0 +1,237 @@
+body{
+    font-family: 'Titillium Web', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(30, 30, 47);
+}
+
+.sm{
+    padding-top: 20px;
+}
+.ms{
+    padding-top: 40px;
+}
+.lg{
+    padding-top: 60px;
+}
+
+/*Navbar*/
+
+.nav{
+    background-color: rgb(30, 30, 47);
+    border: 1px;
+    padding: 15px;
+
+}
+
+
+
+.link{
+    color: rgb(60, 163, 114);
+    text-decoration: none;
+
+}
+
+.link:hover{
+    color: rgb(60, 163, 114);
+    text-decoration: underline;
+}
+
+/*Navbar*/
+
+/*Header*/
+
+.Banner {
+    background-color:rgb(60, 163, 114);
+    border-bottom-right-radius: 70px;
+    border-bottom-left-radius: 70px;
+    padding: 40px;
+}
+
+.header-title{
+    font-size: 28px;
+    color: #fff;
+
+}
+
+.number{
+    color: #fff;
+}
+
+/* Chartjs Part */
+
+.BodyGraph{
+    padding: 20px;
+}
+
+/*Card Section*/
+
+.card-section{
+    padding: 20px;
+}
+
+.card{
+    border: 1px solid rgb(30, 30, 47);
+
+}
+.card-header{
+    background-color: rgb(39, 42, 62);
+    color: #fff;
+}
+.card-body{
+    padding: 20px;
+    background-color: rgb(39, 42, 62)
+
+}
+
+.won{
+    border-left: 10px solid #1cc88a;
+}
+.loss{
+    border-left: 10px solid #e74a3b;
+}
+
+.card-title{
+    text-align:left;
+    font-size: 20px;
+    color: rgb(228, 76, 196);
+
+}
+
+.card-subtitle{
+    padding-top: 10px;
+    font-size: 35px;
+    color: #fff;
+}
+
+/*Card Part*/
+
+.Mayor{
+    padding: 20px;
+}
+
+.div-card{
+    overflow:scroll;
+    height: 500px;
+}
+
+
+.div-card table{
+    color: #fff;
+    overflow: scroll;
+}
+
+/*Diary Day*/
+
+.DayBook{
+    padding: 20px;
+}
+
+/*Bank code*/
+
+.BankCategory{
+    padding: 20px;
+}
+
+
+.bi{
+    color: #fff;
+    width: 150px;
+}
+
+.button{
+    padding-top: 10px;
+}
+.btn{
+    max-width: 100%;
+}
+
+/*IncomeCategory*/
+
+.io{
+    text-align: right;
+    padding-right: 35px;
+    padding-top: 20px;
+}
+
+.ion {
+    color: #fff;
+    font-size: 40px;
+}
+.category-text{
+    color: #fff;
+}
+/*SpendView*/
+.card-search{
+    color: #fff;
+    text-align: right;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.search{
+    color: #fff;
+    background-color: #1cc88a;
+}
+/*Popup*/
+.modal-content{
+    background-color: rgb(30, 30, 47);
+}
+.modal-title{
+    color: #1cc88a;
+}
+.modal-body {
+    color: #fff;
+
+}
+
+
+/*Footer*/
+#footer{
+    padding: 80px 0;
+    text-align: center;
+    color: #ffffff;
+    background-color: rgb(60, 163, 114);
+}
+#footer a{
+    color: rgb(0, 0, 0);
+}
+#footer .list-inline .list-inline-item{
+    padding: 10px 15px;
+}
+/*Footer*/
+
+@media (max-width: 575.98px) {
+    /*Header*/
+    .box{
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .BodyGraph{
+        display: block;
+    }
+    .card{
+        margin-top: 20px;
+    }
+
+
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .box{
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .box{
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+@media (min-width: 1200px) {
+
+}
+
