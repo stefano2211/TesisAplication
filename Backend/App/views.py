@@ -66,8 +66,6 @@ class IncomeView(APIView):
         return Response(serializer.errors)
 
 
-
-
 class ExpensesView(APIView):
     def get(self, request,*args, **kwargs):
         expenses = Expenses.objects.all()
@@ -80,3 +78,5 @@ class ExpensesView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+

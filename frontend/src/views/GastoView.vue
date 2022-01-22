@@ -65,6 +65,7 @@
                       <th scope="col">Tipo Moneda</th>
                       <th scope="col">Tipo Banco</th>
                       <th scope="col">Monto</th>
+                      <th scope="col">Cambio</th>
                       <th scope="col">Fecha</th>
                     </tr>
                   </thead>
@@ -75,6 +76,7 @@
                       <td>{{Expenses.typeMoney}}</td>
                       <td>{{Expenses.typeBank}}</td>
                       <td>{{Expenses.price}}</td>
+                      <td>{{ getCambioTotal(Dolares, Expenses).toFixed(2) }}</td>
                       <td>{{Expenses.date}}</td>
                     </tr>
                   </tbody>
@@ -231,10 +233,13 @@ export default {
 	},
 	data () {
 		return {
-			Expenses: []
+			Expenses: [],
+			Dolares: [],
 		}
 	},
 	mounted () {
+
+
 		axios.get('http://localhost:8000/Expenses/')
 			.then(response => {
 				console.log('Code Expenses api has received data')
@@ -243,6 +248,27 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		axios.get('https://s3.amazonaws.com/dolartoday/data.json')
+			.then(response => {
+				console.log('Api has received data')
+				this.Dolares = response.data.USD
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	},
+	methods: {
+		getCambioTotal(Dolares, Expenses) {
+			if (Expenses.typeMoney == "USD"){
+
+				return Expenses.price * Dolares.promedio_real
+
+			} else if (Expenses.typeMoney == "BS"){
+
+				return Expenses.price / Dolares.promedio_real
+
+			}
+		},
 	}
 }
 </script>
