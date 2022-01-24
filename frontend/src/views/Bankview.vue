@@ -62,6 +62,7 @@
                       <th scope="col">Name</th>
                       <th scope="col">Price</th>
                       <th scope="col">Tipo Moneda</th>
+                      <th scope="col">Accion</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,6 +71,7 @@
                       <td>{{Bank.name}}</td>
                       <td>{{Bank.price}}</td>
                       <td>{{Bank.type}}</td>
+                      <td><router-link class="btn btn-danger" :to="{ name: 'BankDelete', params: {Id: Bank.id} }">Eliminar</router-link></td>
                     </tr>
                   </tbody>
                 </table>

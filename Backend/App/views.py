@@ -120,5 +120,28 @@ def getDetailCodeBank(request, pk=None):
         Bank.delete()
         return Response('Eliminado')
 
+@api_view(['GET', 'DELETE'])
+def getDetailCodeIncome(request, pk=None):
+    if request.method == 'GET':
+        CodeIncomes = CodeIncome.objects.filter(id = pk).first()
+        IncomeSerializer = CodeIncomeSerializer(CodeIncomes)
+        return Response(IncomeSerializer.data)
+
+    elif request.method == 'DELETE':
+        Bank = CodeIncome.objects.filter(id = pk).first()
+        Bank.delete()
+        return Response('Eliminado')
+
+@api_view(['GET', 'DELETE'])
+def getDetailCodeExpenses(request, pk=None):
+    if request.method == 'GET':
+        CodeExpense = CodeExpenses.objects.filter(id = pk).first()
+        ExpensesSerializer = CodeSpendSerializer(CodeExpense)
+        return Response(ExpensesSerializer.data)
+
+    elif request.method == 'DELETE':
+        CodeExpense = CodeExpenses.objects.filter(id = pk).first()
+        CodeExpense.delete()
+        return Response('Eliminado')
 
 

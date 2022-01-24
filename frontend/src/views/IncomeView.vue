@@ -35,12 +35,14 @@
                     <tr>
                       <th scope="col">Id</th>
                       <th scope="col">Nombre</th>
+                      <th scope="col">Accion</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="Income in Income" :key="Income.id">
                       <th scope="row">{{Income.id}}</th>
                       <td>{{Income.name}}</td>
+                      <td><router-link class="btn btn-danger" :to="{ name: 'CodeIncomeDelete', params: {Id: Income.id} }">Eliminar</router-link></td>
                     </tr>
                   </tbody>
                 </table>

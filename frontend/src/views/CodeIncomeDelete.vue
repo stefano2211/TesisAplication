@@ -4,7 +4,7 @@
         <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 box">
-                <h1>Eliminar Banco</h1>
+                <h1>Eliminar Codigo Ingreso</h1>
             </div>
             </div>
         </div>
@@ -23,21 +23,17 @@
 									<tr>
 									<th scope="col">Id</th>
 									<th scope="col">Name</th>
-									<th scope="col">Tipo Moneda</th>
-									<th scope="col">Monto</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-									<th scope="row">{{Bank.id}}</th>
-									<td>{{Bank.name}}</td>
-									<td>{{Bank.type}}</td>
-									<td>{{Bank.price}}</td>
+									<th scope="row">{{Code.id}}</th>
+									<td>{{Code.name}}</td>
 									</tr>
 								</tbody>
 							</table>
-							<button type="button" class="btn btn-danger" v-on:click="deleteCodeBank">Borrar</button>
-							<router-link class="btn btn-primary" :to="{ name: 'CodeBank'}" style="margin:10px;">Volver</router-link>
+							<button type="button" class="btn btn-danger" v-on:click="deleteCodeIncome">Borrar</button>
+							<router-link class="btn btn-primary" :to="{ name: 'CodeIncome'}" style="margin:10px;">Volver</router-link>
 						</div>
 					</div>
 				</div>
@@ -62,27 +58,27 @@ export default {
 	},
 	data() {
 		return {
-			BankId: this.$route.params.Id,
-			Bank: []
+			CodeIncomeId: this.$route.params.Id,
+			Code: []
 		}
 	},
 	methods: {
-		getCodeBank() {
-			const path = 'http://localhost:8000/CodesBank/' + `${this.BankId}/`
+		getCodeIncome() {
+			const path = 'http://localhost:8000/CodeIncome/' + `${this.CodeIncomeId}/`
 			axios.get(path)
 				.then((response) => {
-					this.Bank = response.data
+					this.Code = response.data
 				})
 				.catch((error) => {
 					console.log(error)
 				})
 		},
-		deleteCodeBank() {
-			const path = 'http://localhost:8000/CodesBank/' + `${this.BankId}/`
+		deleteCodeIncome() {
+			const path = 'http://localhost:8000/CodeIncome/' + `${this.CodeIncomeId}/`
 			axios.delete(path)
 				.then((data) => {
 					console(data)
-					this.$router.push({name: 'CodeBank'})
+					this.$router.push({name: 'CodeIncome'})
 					swal('Se a borrado la info')
 				})
 				.catch((error) => {
@@ -92,7 +88,7 @@ export default {
 		}
 	},
 	created() {
-		this.getCodeBank()
+		this.getCodeIncome()
 	}
 }
 </script>

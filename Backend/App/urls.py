@@ -14,4 +14,6 @@ urlpatterns = [
     path('Expenses/<int:pk>/', getDetailExpenses, name= "expenses_detail"),
     path('Income/<int:pk>/', getDetailIncomes, name= "income_detail"),
     path('CodesBank/<int:pk>/', getDetailCodeBank, name= "bank_detail"),
+    path('CodeIncome/<int:pk>/', getDetailCodeIncome, name= "code_income_detail"),
+    path('CodeSpend/<int:pk>/', getDetailCodeExpenses, name= "code_income_detail"),
 ]

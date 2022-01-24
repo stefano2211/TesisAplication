@@ -41,6 +41,7 @@
                     <tr v-for="Expenses in Expenses" :key="Expenses.id">
                       <th scope="row">{{Expenses.id}}</th>
                       <td>{{Expenses.name}}</td>
+                      <td><router-link class="btn btn-danger" :to="{ name: 'CodeExpensesDelete', params: {Id: Expenses.id} }">Eliminar</router-link></td>
                     </tr>
                   </tbody>
                 </table>
