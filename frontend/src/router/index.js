@@ -5,6 +5,8 @@ import CodeIncome from '../views/IncomeView.vue'
 import CodeSpend from '../views/SpendView.vue'
 import Spend from '../views/GastoView.vue'
 import Income from '../views/IngresoView.vue'
+import ExpensesDelete from '../views/ExpensesDelete.vue'
+import IncomeDelete from '../views/IncomeDelete.vue'
 
 const routes = [
 	{
@@ -36,7 +38,17 @@ const routes = [
 		path: '/Ingresos',
 		name: 'Income',
 		component: Income
-	}
+	},
+	{
+		path: '/Gasto/:Id/Eliminar',
+		name: 'ExpensesDelete',
+		component: ExpensesDelete
+	},
+	{
+		path: '/Ingresos/:Id/Eliminar',
+		name: 'IncomeDelete',
+		component: IncomeDelete
+	},
 ]
 
 const router = createRouter({

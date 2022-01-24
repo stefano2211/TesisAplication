@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework import viewsets
 from rest_framework import generics
-\
+from django.http import Http404
+from rest_framework import status
+from rest_framework.decorators import api_view
 
 from .models import *
 from .serializer import *
@@ -78,5 +80,45 @@ class ExpensesView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+
+
+
+@api_view(['GET', 'DELETE'])
+def getDetailExpenses(request, pk=None):
+    if request.method == 'GET':
+        expenses = Expenses.objects.filter(id = pk).first()
+        expensesSerializer = ExpensesSerializer(expenses)
+        return Response(expensesSerializer.data)
+
+    elif request.method == 'DELETE':
+        expenses = Expenses.objects.filter(id = pk).first()
+        expenses.delete()
+        return Response('Eliminado')
+
+@api_view(['GET', 'DELETE'])
+def getDetailIncomes(request, pk=None):
+    if request.method == 'GET':
+        income = Income.objects.filter(id = pk).first()
+        incomeSerializer = IncomeSerializer(income)
+        return Response(incomeSerializer.data)
+
+    elif request.method == 'DELETE':
+        expenses = Income.objects.filter(id = pk).first()
+        expenses.delete()
+        return Response('Eliminado')
+
+@api_view(['GET', 'DELETE'])
+def getDetailCodeBank(request, pk=None):
+    if request.method == 'GET':
+        CodeBanks = CodeBank.objects.filter(id = pk).first()
+        BankSerializer = CodeBankSerializer(CodeBanks)
+        return Response(BankSerializer.data)
+
+    elif request.method == 'DELETE':
+        Bank = CodeBank.objects.filter(id = pk).first()
+        Bank.delete()
+        return Response('Eliminado')
+
 
 

@@ -184,6 +184,16 @@ body{
 
 }
 
+.card-information{
+    padding-top: 40px;
+    padding-bottom: 40px
+}
+
+
+.table{
+    color: #fff;
+}
+
 
 /*Footer*/
 #footer{

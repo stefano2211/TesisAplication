@@ -62,20 +62,26 @@
                     <tr>
                       <th scope="col">Id</th>
                       <th scope="col">Nombre</th>
+                      <th scope="col">Tipo Ingreso</th>
                       <th scope="col">Tipo Moneda</th>
                       <th scope="col">Tipo Banco</th>
                       <th scope="col">Monto</th>
+                      <th scope="col">Cambio</th>
                       <th scope="col">Fecha</th>
+                      <th scope="col">Accion</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="Income in Income" :key="Income.id">
                       <th scope="row">{{Income.id}}</th>
                       <td>{{Income.name}}</td>
+                      <td>{{Income.typeIncome}}</td>
                       <td>{{Income.typeMoney}}</td>
                       <td>{{Income.typeBank}}</td>
                       <td>{{Income.price}}</td>
+                      <td>{{ getCambioTotal(Dolares, Income).toFixed(2) }}</td>
                       <td>{{Income.date}}</td>
+                      <td><router-link class="btn btn-danger" :to="{ name: 'IncomeDelete', params: {Id: Income.id} }">Eliminar</router-link></td>
                     </tr>
                   </tbody>
                 </table>
@@ -232,7 +238,8 @@ export default {
 	},
 	data () {
 		return {
-			Income: []
+			Income: [],
+			Dolares: []
 		}
 	},
 	mounted () {
@@ -244,6 +251,28 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+
+		axios.get('https://s3.amazonaws.com/dolartoday/data.json')
+			.then(response => {
+				console.log('Api has received data')
+				this.Dolares = response.data.USD
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	},
+	methods: {
+		getCambioTotal(Dolares, Income) {
+			if (Income.typeMoney == "USD"){
+
+				return Income.price * Dolares.promedio_real
+
+			} else if (Income.typeMoney == "BS"){
+
+				return Income.price / Dolares.promedio_real
+
+			}
+		},
 	}
 }
 </script>

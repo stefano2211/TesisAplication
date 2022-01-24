@@ -62,22 +62,26 @@
                     <tr>
                       <th scope="col">Id</th>
                       <th scope="col">Name</th>
+                      <th scope="col">Tipo de Gasto</th>
                       <th scope="col">Tipo Moneda</th>
                       <th scope="col">Tipo Banco</th>
                       <th scope="col">Monto</th>
                       <th scope="col">Cambio</th>
                       <th scope="col">Fecha</th>
+                      <th scope="col">Accion</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="Expenses in Expenses" :key="Expenses.id">
                       <th scope="row">{{Expenses.id}}</th>
                       <td>{{Expenses.name}}</td>
+                      <td>{{Expenses.typeExpenses}}</td>
                       <td>{{Expenses.typeMoney}}</td>
                       <td>{{Expenses.typeBank}}</td>
                       <td>{{Expenses.price}}</td>
                       <td>{{ getCambioTotal(Dolares, Expenses).toFixed(2) }}</td>
                       <td>{{Expenses.date}}</td>
+                      <td><router-link class="btn btn-danger" :to="{ name: 'ExpensesDelete', params: {Id: Expenses.id} }">Eliminar</router-link></td>
                     </tr>
                   </tbody>
                 </table>
@@ -220,8 +224,9 @@ import ChartCircle from '../components/Graph/PorcentGraph.vue'
 import Modal from '../components/CodeSpend/Popup2.vue'
 import axios from 'axios'
 
+
 export default {
-	name: 'Home',
+	name: 'Spend',
 	components: {
 		Navbar,
 		Footer,
