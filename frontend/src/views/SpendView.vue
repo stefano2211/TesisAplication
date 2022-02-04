@@ -35,6 +35,7 @@
                     <tr>
                       <th scope="col">Id</th>
                       <th scope="col">Nombre</th>
+                      <th scope="col">Accion</th>
                     </tr>
                   </thead>
                   <tbody>

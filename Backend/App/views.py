@@ -9,6 +9,7 @@ from rest_framework import generics
 from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.db.models import Q
 
 from .models import *
 from .serializer import *
@@ -144,4 +145,14 @@ def getDetailCodeExpenses(request, pk=None):
         CodeExpense.delete()
         return Response('Eliminado')
 
+
+
+
+
+
+class TotalExpenses(APIView):
+    def get(self, request,*args, **kwargs):
+        Expense = Expenses.objects.filter(typeMoney="USD")
+        serializers = ExpensesSerializers(Expense, many=True)
+        return Response(serializers.data)
 

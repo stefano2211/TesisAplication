@@ -26,7 +26,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    210,38<small>Bs</small>
+                        <small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -240,6 +240,7 @@ export default {
 		return {
 			Expenses: [],
 			Dolares: [],
+      ExpensesType: [],
 		}
 	},
 	mounted () {
@@ -261,6 +262,19 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+    axios.get('http://localhost:8000/Expenses/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesType = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+
+
+
+
+
 	},
 	methods: {
 		getCambioTotal(Dolares, Expenses) {

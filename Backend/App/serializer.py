@@ -27,3 +27,11 @@ class ExpensesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expenses
         fields = '__all__'
+
+class ExpensesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Expenses
+        fields = (
+            "typeMoney",
+            "price",
+        )
