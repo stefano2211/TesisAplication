@@ -26,7 +26,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                        <small>Bs</small>
+                    {{getTotalBs(ExpensesType, Total, numero)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -240,12 +240,12 @@ export default {
 		return {
 			Expenses: [],
 			Dolares: [],
-      ExpensesType: [],
+			ExpensesType: [],
+			Total: [],
+			numero: 0,
 		}
 	},
 	mounted () {
-
-
 		axios.get('http://localhost:8000/Expenses/')
 			.then(response => {
 				console.log('Code Expenses api has received data')
@@ -262,7 +262,7 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
-    axios.get('http://localhost:8000/Expenses/usd')
+		axios.get('http://localhost:8000/Expenses/usd')
 			.then(response => {
 				console.log('Code Expenses api has received data')
 				this.ExpensesType = response.data
@@ -282,7 +282,18 @@ export default {
 				return Expenses.price / Dolares.promedio_real
 
 			}
+
 		},
+		getTotalBs(ExpensesType, Total, numero){
+			ExpensesType.forEach (function(exp){
+				Total.push(exp.price)
+			});
+			for (let i = 0; i < Total.length; i++) {
+				numero += Total[i];
+				break;
+			}
+			return numero
+		}
 	}
 }
 </script>
