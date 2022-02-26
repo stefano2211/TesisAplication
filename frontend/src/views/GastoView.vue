@@ -26,7 +26,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    {{getTotalBs(ExpensesType, Total, numero)}}<small>Bs</small>
+                    {{getTotalBs(ExpensesType, Total)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -223,6 +223,7 @@ import BarChart from '../components/Graph/BarChar.vue'
 import ChartCircle from '../components/Graph/PorcentGraph.vue'
 import Modal from '../components/CodeSpend/Popup2.vue'
 import axios from 'axios'
+import lodash from 'lodash'
 
 
 export default {
@@ -284,15 +285,12 @@ export default {
 			}
 
 		},
-		getTotalBs(ExpensesType, Total, numero){
-			ExpensesType.forEach (function(exp){
-				Total.push(exp.price)
+		getTotalBs(ExpensesType, Total){
+			ExpensesType.forEach(element => {
+				Total.push(element.price)
 			});
-			for (let i = 0; i < Total.length; i++) {
-				numero += Total[i];
-				break;
-			}
-			return numero
+			let total1 = lodash.sum(Total)
+			return total1
 		}
 	}
 }
