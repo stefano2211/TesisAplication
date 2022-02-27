@@ -156,3 +156,20 @@ class TotalExpenses(APIView):
         serializers = ExpensesSerializers(Expense, many=True)
         return Response(serializers.data)
 
+class TotalExpensesBs(APIView):
+    def get(self, request,*args, **kwargs):
+        Expense = Expenses.objects.filter(typeMoney="BS")
+        serializers = ExpensesSerializers(Expense, many=True)
+        return Response(serializers.data)
+
+class TotalIncomeUSD(APIView):
+    def get(self, request,*args, **kwargs):
+        Incomes = Income.objects.filter(typeMoney="USD")
+        serializers = IncomeSerializers(Incomes, many=True)
+        return Response(serializers.data)
+
+class TotalIncomeBS(APIView):
+    def get(self, request,*args, **kwargs):
+        Incomes = Income.objects.filter(typeMoney="BS")
+        serializers = IncomeSerializers(Incomes, many=True)
+        return Response(serializers.data)

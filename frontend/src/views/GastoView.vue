@@ -12,7 +12,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    210,38<small>$</small>
+                    {{getTotalUsd(ExpensesType,ExpensesTypebs, Dolares).toFixed(2)}}<small>$</small>
                   </div>
                 </div>
               </div>
@@ -26,7 +26,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    {{getTotalBs(ExpensesType, Total)}}<small>Bs</small>
+                    {{getTotalBs(ExpensesType,ExpensesTypebs,Dolares)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -223,7 +223,6 @@ import BarChart from '../components/Graph/BarChar.vue'
 import ChartCircle from '../components/Graph/PorcentGraph.vue'
 import Modal from '../components/CodeSpend/Popup2.vue'
 import axios from 'axios'
-import lodash from 'lodash'
 
 
 export default {
@@ -242,6 +241,7 @@ export default {
 			Expenses: [],
 			Dolares: [],
 			ExpensesType: [],
+			ExpensesTypebs: [],
 			Total: [],
 			numero: 0,
 		}
@@ -271,6 +271,14 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		axios.get('http://localhost:8000/Expenses/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesTypebs = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	},
 	methods: {
 		getCambioTotal(Dolares, Expenses) {
@@ -285,12 +293,15 @@ export default {
 			}
 
 		},
-		getTotalBs(ExpensesType, Total){
-			ExpensesType.forEach(element => {
-				Total.push(element.price)
-			});
-			let total1 = lodash.sum(Total)
-			return total1
+		getTotalBs(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
+		},
+		getTotalUsd(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
 		}
 	}
 }

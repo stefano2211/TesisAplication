@@ -18,4 +18,8 @@ urlpatterns = [
     path('CodeSpend/<int:pk>/', getDetailCodeExpenses, name= "code_income_detail"),
 
     path('Expenses/usd', TotalExpenses.as_view()),
+    path('Expenses/bs', TotalExpensesBs.as_view()),
+
+    path('Income/usd', TotalIncomeUSD.as_view()),
+    path('Income/bs', TotalIncomeBS.as_view()),
 ]

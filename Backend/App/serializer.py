@@ -35,3 +35,11 @@ class ExpensesSerializers(serializers.ModelSerializer):
             "typeMoney",
             "price",
         )
+
+class IncomeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Expenses
+        fields = (
+            "typeMoney",
+            "price",
+        )

@@ -260,6 +260,22 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+    axios.get('http://localhost:8000/Income/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesType = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Income/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesTypebs = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	},
 	methods: {
 		getCambioTotal(Dolares, Income) {
@@ -273,6 +289,16 @@ export default {
 
 			}
 		},
+    getTotalBs(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
+		},
+		getTotalUsd(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
+		}
 	}
 }
 </script>
