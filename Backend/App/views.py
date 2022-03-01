@@ -173,3 +173,15 @@ class TotalIncomeBS(APIView):
         Incomes = Income.objects.filter(typeMoney="BS")
         serializers = IncomeSerializers(Incomes, many=True)
         return Response(serializers.data)
+
+class TotalBankUSD(APIView):
+    def get(self, request,*args, **kwargs):
+        Banks = CodeBank.objects.filter(type="Dolares")
+        serializers = BankSerializers(Banks, many=True)
+        return Response(serializers.data)
+
+class TotalBankBS(APIView):
+    def get(self, request,*args, **kwargs):
+        Banks = CodeBank.objects.filter(type="Bolivares")
+        serializers = BankSerializers(Banks, many=True)
+        return Response(serializers.data)

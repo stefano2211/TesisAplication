@@ -22,4 +22,7 @@ urlpatterns = [
 
     path('Income/usd', TotalIncomeUSD.as_view()),
     path('Income/bs', TotalIncomeBS.as_view()),
+
+    path('Bank/usd', TotalBankUSD.as_view()),
+    path('Bank/bs', TotalBankBS.as_view()),
 ]

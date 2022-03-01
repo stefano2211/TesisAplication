@@ -43,3 +43,11 @@ class IncomeSerializers(serializers.ModelSerializer):
             "typeMoney",
             "price",
         )
+
+class BankSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CodeBank
+        fields = (
+            "type",
+            "price",
+        )

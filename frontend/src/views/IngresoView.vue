@@ -12,7 +12,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    210,38<small>$</small>
+                    {{getTotalUsd(IncomeBs,IncomeUSD, Dolares).toFixed(2)}}<small>$</small>
                   </div>
                 </div>
               </div>
@@ -26,7 +26,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    210,38<small>Bs</small>
+                    {{getTotalBs(IncomeUSD,IncomeBs, Dolares)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -239,7 +239,9 @@ export default {
 	data () {
 		return {
 			Income: [],
-			Dolares: []
+			Dolares: [],
+			IncomeUSD: [],
+			IncomeBs: [],
 		}
 	},
 	mounted () {
@@ -260,10 +262,10 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
-    axios.get('http://localhost:8000/Income/usd')
+		axios.get('http://localhost:8000/Income/usd')
 			.then(response => {
 				console.log('Code Expenses api has received data')
-				this.ExpensesType = response.data
+				this.IncomeUSD = response.data
 			})
 			.catch(err => {
 				console.log(err)
@@ -271,7 +273,7 @@ export default {
 		axios.get('http://localhost:8000/Income/bs')
 			.then(response => {
 				console.log('Code Expenses api has received data')
-				this.ExpensesTypebs = response.data
+				this.IncomeBs = response.data
 			})
 			.catch(err => {
 				console.log(err)
@@ -289,15 +291,15 @@ export default {
 
 			}
 		},
-    getTotalBs(ExpensesType,ExpensesTypebs, Dolares){
-			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
-			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
-			return ExpensesTotalUSD + ExpensesTotalBS
+		getTotalBs(IncomeBs,IncomeUSD, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			return IncomeTotalUSD + IncomeTotalBS
 		},
-		getTotalUsd(ExpensesType,ExpensesTypebs, Dolares){
-			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
-			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
-			return ExpensesTotalUSD + ExpensesTotalBS
+		getTotalUsd(IncomeBs,IncomeUSD, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			return IncomeTotalUSD + IncomeTotalBS
 		}
 	}
 }

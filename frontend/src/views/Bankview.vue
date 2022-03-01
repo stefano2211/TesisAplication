@@ -12,7 +12,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    21,38 <small>Bs</small>
+                    {{getTotalBs(CodeBankBS,CodeBankUSD, Dolares)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -21,12 +21,12 @@
             <div class="card">
               <div class="card-header">
                 <div class="card-title text-center" style="padding-top: 10px">
-                    Profit del Mes
+                    Balance Total Dolares
                 </div>
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    3,14$ - 23Bs
+                    {{getTotalUsd(CodeBankBS,CodeBankUSD, Dolares).toFixed(2)}}
                   </div>
                 </div>
             </div>
@@ -61,6 +61,7 @@
                       <th scope="col">Id</th>
                       <th scope="col">Name</th>
                       <th scope="col">Price</th>
+                      <th scope="col">Cambio</th>
                       <th scope="col">Tipo Moneda</th>
                       <th scope="col">Accion</th>
                     </tr>
@@ -70,6 +71,7 @@
                       <th scope="row">{{Bank.id}}</th>
                       <td>{{Bank.name}}</td>
                       <td>{{Bank.price}}</td>
+                      <td>{{ getCambioTotal(Dolares, Bank).toFixed(2) }}</td>
                       <td>{{Bank.type}}</td>
                       <td><router-link class="btn btn-danger" :to="{ name: 'BankDelete', params: {Id: Bank.id} }">Eliminar</router-link></td>
                     </tr>
@@ -99,7 +101,10 @@ export default {
 	},
 	data () {
 		return {
-			Bank: []
+			Bank: [],
+			Dolares: [],
+			CodeBankUSD: [],
+			CodeBankBS: []
 		}
 	},
 	mounted () {
@@ -111,6 +116,56 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		axios.get('https://s3.amazonaws.com/dolartoday/data.json')
+			.then(response => {
+				console.log('Api has received data')
+				this.Dolares = response.data.USD
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Bank/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeBankUSD = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Bank/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeBankBS = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+
+	},
+	methods: {
+		getCambioTotal(Dolares, Bank) {
+			if (Bank.type == "Dolares"){
+
+				return Bank.price * Dolares.promedio_real
+
+			} else if (Bank.type == "Bolivares"){
+
+				return Bank.price / Dolares.promedio_real
+
+			}
+		},
+		getTotalBs(CodeBankBS,CodeBankUSD, Dolares){
+			const BankTotalUSD = CodeBankUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const BankTotalBS = CodeBankBS.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const total = BankTotalUSD + BankTotalBS
+			return total
+		},
+		getTotalUsd(CodeBankBS,CodeBankUSD, Dolares){
+			const BankTotalUSD = CodeBankUSD.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const BankTotalBS = CodeBankBS.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			const total = BankTotalUSD + BankTotalBS
+			return total
+		}
 	}
 
 }

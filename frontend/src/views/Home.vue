@@ -12,7 +12,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    21,38 <small>Bs</small>
+                    {{getTotal(CodeBankUSD, CodeBankBS, ExpensesType, ExpensesTypebs, IncomeUSD, IncomeBs, Dolares).toFixed(2)}}<small>Bs</small>
                   </div>
                 </div>
               </div>
@@ -40,7 +40,7 @@
               </div>
                 <div class="card-body">
                   <div class="card-subtitle">
-                    21,38$
+                    {{getTotalUSD(CodeBankUSD, CodeBankBS, ExpensesType, ExpensesTypebs, IncomeUSD, IncomeBs, Dolares).toFixed(2)}}
                   </div>
                 </div>
             </div>
@@ -55,9 +55,9 @@
             <div class="card won">
               <div class="card-body">
                 <div class="card-title">
-                  Ganancias mes en Dolares
+                  Ganancias en Bolivares
                   <div class="card-subtitle">
-                    25$
+                    {{getTotalBsIncome(IncomeBs,IncomeUSD, Dolares)}}Bs
                   </div>
                 </div>
               </div>
@@ -67,9 +67,9 @@
             <div class="card won">
               <div class="card-body">
                 <div class="card-title">
-                    Gastos mes en Dolares
+                    Ganancias en Dolares
                   <div class="card-subtitle">
-                    25Bs
+                    {{getTotalUsdIncome(IncomeBs,IncomeUSD, Dolares).toFixed(2)}}$
                   </div>
                 </div>
               </div>
@@ -79,9 +79,9 @@
             <div class="card loss">
               <div class="card-body">
                 <div class="card-title">
-                    Gastos mes en Bolivares
+                    Gastos en Bolivares
                   <div class="card-subtitle">
-                    25Bs
+                    {{getTotalBs(ExpensesType,ExpensesTypebs, Dolares)}}
                   </div>
                 </div>
               </div>
@@ -91,9 +91,9 @@
             <div class="card loss">
               <div class="card-body">
                 <div class="card-title">
-                    Gastos mes en Dolares
+                    Gastos en Dolares
                   <div class="card-subtitle">
-                    25$
+                    {{getTotalUsd(ExpensesType,ExpensesTypebs, Dolares).toFixed(2)}}
                   </div>
                 </div>
               </div>
@@ -371,7 +371,14 @@ export default {
 			Income: [],
 			Expenses: [],
 			Bank: [],
-			CodeIncome: []
+			CodeIncome: [],
+			CodeBankUSD: [],
+			CodeBankBS: [],
+			ExpensesType: [],
+			ExpensesTypebs: [],
+			IncomeUSD: [],
+			IncomeBs: [],
+			Dolares: [],
 		}
 	},
 	computed: {
@@ -413,6 +420,119 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		axios.get('http://localhost:8000/Bank/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeBankUSD = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Bank/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeBankBS = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Expenses/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesType = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Expenses/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.ExpensesTypebs = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Income/usd')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.IncomeUSD = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/Income/bs')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.IncomeBs = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('https://s3.amazonaws.com/dolartoday/data.json')
+			.then(response => {
+				console.log('Api has received data')
+				this.Dolares = response.data.USD
+			})
+			.catch(err => {
+				console.log(err)
+			})
+
+	},
+	methods: {
+		getTotalBsIncome(IncomeBs,IncomeUSD, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			return IncomeTotalUSD + IncomeTotalBS
+		},
+		getTotalUsdIncome(IncomeBs,IncomeUSD, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			return IncomeTotalUSD + IncomeTotalBS
+		},
+		getTotalBs(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
+		},
+		getTotalUsd(ExpensesType,ExpensesTypebs, Dolares){
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr / Dolares.promedio_real, 0);
+			return ExpensesTotalUSD + ExpensesTotalBS
+		},
+		getTotal(CodeBankUSD, CodeBankBS, ExpensesType, ExpensesTypebs, IncomeUSD, IncomeBs, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const IncomeTotalBs = IncomeTotalUSD + IncomeTotalBS
+
+			const BankTotalUSD = CodeBankUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const BankTotalBS = CodeBankBS.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const BankTotalBs = BankTotalUSD + BankTotalBS
+
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const ExpensesTotalBs = ExpensesTotalUSD + ExpensesTotalBS
+
+			const resta = IncomeTotalBs - ExpensesTotalBs
+			const resultado = resta + BankTotalBs
+			return resultado
+		},
+		getTotalUSD(CodeBankUSD, CodeBankBS, ExpensesType, ExpensesTypebs, IncomeUSD, IncomeBs, Dolares){
+			const IncomeTotalUSD = IncomeUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const IncomeTotalBS = IncomeBs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const IncomeTotalBs = IncomeTotalUSD + IncomeTotalBS
+
+			const BankTotalUSD = CodeBankUSD.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const BankTotalBS = CodeBankBS.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const BankTotalBs = BankTotalUSD + BankTotalBS
+
+			const ExpensesTotalUSD = ExpensesType.map(item => item.price).reduce((prev, curr) => prev + curr * Dolares.promedio_real, 0);
+			const ExpensesTotalBS = ExpensesTypebs.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+			const ExpensesTotalBs = ExpensesTotalUSD + ExpensesTotalBS
+
+			const resta = IncomeTotalBs - ExpensesTotalBs
+			const resultado = resta + BankTotalBs
+			return resultado / Dolares.promedio_real
+		}
 	}
 }
 </script>
