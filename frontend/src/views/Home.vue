@@ -81,7 +81,7 @@
                 <div class="card-title">
                     Gastos en Bolivares
                   <div class="card-subtitle">
-                    {{getTotalBs(ExpensesType,ExpensesTypebs, Dolares)}}
+                    {{getTotalBs(ExpensesType,ExpensesTypebs, Dolares).toFixed(2)}}
                   </div>
                 </div>
               </div>
@@ -119,66 +119,20 @@
           <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="card">
               <div class="card-header">
-                Bank Table
+                Tabla de Gastos
               </div>
               <div class="card-body div-card">
                 <table class="table">
                   <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Nombre</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
+                    <tr v-for="CodeSpend in CodeSpend" :key="CodeSpend.id">
+                      <th scope="row">{{CodeSpend.id}}</th>
+                      <td>{{CodeSpend.name}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -210,10 +164,8 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">Id</th>
+                      <th scope="col">Nombre</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -245,7 +197,7 @@
           <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="card">
               <div class="card-header">
-                Bank Table
+                Tabla de Bancos
               </div>
               <div class="card-body div-card">
                 <table class="table">
@@ -374,6 +326,7 @@ export default {
 			CodeIncome: [],
 			CodeBankUSD: [],
 			CodeBankBS: [],
+			CodeSpend: [],
 			ExpensesType: [],
 			ExpensesTypebs: [],
 			IncomeUSD: [],
@@ -416,6 +369,14 @@ export default {
 			.then(response => {
 				console.log('Code Expenses api has received data')
 				this.CodeIncome = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/CodeSpend/')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeSpend = response.data
 			})
 			.catch(err => {
 				console.log(err)

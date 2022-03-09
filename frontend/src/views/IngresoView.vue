@@ -138,60 +138,14 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">Id</th>
+                      <th scope="col">Nombre</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
+                    <tr v-for="CodeIncome in CodeIncome" :key="CodeIncome.id">
+                      <th scope="row">{{CodeIncome.id}}</th>
+                      <td>{{CodeIncome.name}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -242,6 +196,7 @@ export default {
 			Dolares: [],
 			IncomeUSD: [],
 			IncomeBs: [],
+			CodeIncome: [],
 		}
 	},
 	mounted () {
@@ -274,6 +229,14 @@ export default {
 			.then(response => {
 				console.log('Code Expenses api has received data')
 				this.IncomeBs = response.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		axios.get('http://localhost:8000/CodeIncome/')
+			.then(response => {
+				console.log('Code Expenses api has received data')
+				this.CodeIncome = response.data
 			})
 			.catch(err => {
 				console.log(err)

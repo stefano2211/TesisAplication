@@ -9,6 +9,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { LineChart } from 'vue-chart-3'
+
+
 import {
 	Chart,
 	LineController,
@@ -24,6 +26,9 @@ Chart.register(
 	PointElement,
 	LineElement
 )
+
+
+
 const dataValues1 = ref([12, 14, 16, 18, 11, 13, 15, 12, 10, 15, 11, 12])
 const dataValues = ref([10, 18, 10, 12, 11, 16, 11, 19, 11, 15, 16, 16])
 const data = computed(() => ({
@@ -53,4 +58,5 @@ const options = ref({
 		}
 	}
 })
+
 </script>
